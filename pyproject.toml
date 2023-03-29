@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "my-blog"
+version = "0.1.0"
+description = ""
+authors = ["GamBit1986 <mazepa86@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "my_blog"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

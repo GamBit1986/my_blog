@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Users list
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col">
+        <h1>Articles list:</h1>
+        <ul>
+            {% for pk in article %}
+
+            <li><a href="{{ url_for('articles.get_article', pk=pk) }}"
+                    class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    {{ article[pk]['Title'] }}</a></li>
+
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
