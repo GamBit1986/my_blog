@@ -7,14 +7,16 @@ Articles detail
 {% block body %}
 <div class="container">
 
+
     <!-- Циклом и условиями выбираем нужного автора, для которого создаем ссылку на его страницу -->
     {% for article_key in article_dict %}
     {% if article_dict[article_key] == article_dict["User"] %}
+    
     {% for user in users %}
-    {% if article_dict[article_key] == users[user] %}
-
+    {% if article_dict[article_key] == user.id %}
     <h3>{{ article_key }}</h3>
-    <a href="{{ url_for('user.get_user', pk=user) }}">{{ article_dict[article_key] }}</a>
+    <a href="{{ url_for('user.get_user', pk=user.id) }}">{{ article_dict[article_key] }}</a>
+
     {% endif %}
     {% endfor %}
 
@@ -25,6 +27,7 @@ Articles detail
     <p>{{ article_dict[article_key] }}</p>
     {% endif %}
     {% endfor %}
+
 
 
 
