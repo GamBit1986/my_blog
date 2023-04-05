@@ -1,10 +1,12 @@
 from flask import Flask
 
+
 from blog.user.views import user
 from blog.articles.views import articles
 from blog.auth.views import auth
 from .models import User
 from .extension import db, login_manager
+
 
 
 def create_app() -> Flask:

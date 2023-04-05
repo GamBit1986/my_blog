@@ -50,6 +50,7 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+
 name = "flask-login"
 version = "0.6.2"
 description = "User authentication and session management for Flask."
@@ -156,6 +157,7 @@ docs = ["Sphinx", "docutils (<0.18)"]
 test = ["objgraph", "psutil"]
 
 [[package]]
+
 name = "itsdangerous"
 version = "2.1.2"
 description = "Safely pass data to untrusted environments and back."
@@ -336,6 +338,7 @@ files = [
 ]
 
 [[package]]
+
 name = "werkzeug"
 version = "2.2.3"
 description = "The comprehensive WSGI web application library."
@@ -356,4 +359,6 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
+
 content-hash = "26754454a12b67926bec0b4630611448f28e76daaa46fedde580084ea76eba40"
+

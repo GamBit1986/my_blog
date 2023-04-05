@@ -1,3 +1,4 @@
+
 from blog.app import create_app, db
 from werkzeug.security import generate_password_hash
 
@@ -23,3 +24,4 @@ def create_users():
     )
 
     db.session.commit()
+

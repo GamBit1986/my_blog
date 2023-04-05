@@ -12,6 +12,7 @@ ARTICLE = {
     0: {
         "Title": "Title 1",
         "Text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis, non ipsum quae saepe a ducimus nemo ratione ipsam totam doloribus debitis! Illo ullam ducimus ab vero numquam autem, excepturi alias!Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ipsam",
+
         "User": 1,
     },
     1: {
@@ -46,6 +47,7 @@ def get_article(pk: int):
     try:
         article_dict = ARTICLE[pk]
         users = User.query.all()
+
     except IndexError:
         raise NotFound(f"User ID {pk} is not found")
     return render_template(

@@ -8,6 +8,7 @@ user = Blueprint("user", __name__, static_folder="../static")
 
 @user.route("/")
 def user_list():
+
     from ..models import User
 
     users = User.query.all()
