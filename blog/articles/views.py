@@ -42,7 +42,7 @@ def article_list():
 
 
 @articles.route("/<int:pk>")
-@login_required
+#@login_required
 def get_article(pk: int):
     try:
         article_dict = ARTICLE[pk]
