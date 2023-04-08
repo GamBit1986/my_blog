@@ -42,6 +42,7 @@ def register_blueprints(app: Flask):
 def register_commands(app: Flask):
     app.cli.add_command(init_db)
     app.cli.add_command(create_users)
+    app.cli.add_command(create_admin)
 
 
 @app.cli.command("init-db")
@@ -67,6 +68,28 @@ def create_users():
     )
 
     db.session.commit()
+
+
+@app.cli.command("create-admin")
+def create_admin():
+    """
+
+    Run in your terminal:
+
+    flask create-users
+
+    > done! created users: <User #1 'admin'> 
+    """
+
+    from blog.models import User
+
+    admin = User(username="admin", is_staff=True)
+
+    db.session.add(admin)
+
+    db.session.commit()
+
+    print("done! created users:", admin)
 
 
 app.config.from_object("blog.config")
