@@ -1,27 +1,36 @@
+from blog.app import app
+from blog.extension import db
 
-from blog.app import create_app, db
-from werkzeug.security import generate_password_hash
-
-
-app = create_app()
-
-
-@app.cli.command("init-db")
-def init_db():
-    db.create_all()
-
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        debug=True,
+    )
 
 @app.cli.command("create-users")
+
 def create_users():
+
+    """
+
+    Run in your terminal:
+
+    flask create-users
+
+    > done! created users: <User #1 'admin'> <User #2 'james'>
+
+    """
+
     from blog.models import User
 
-    db.session.add(User(email="aaaa@test.com", password=generate_password_hash("test")))
-    db.session.add(
-        User(email="test2@test.com", password=generate_password_hash("test2"))
-    )
-    db.session.add(
-        User(email="test3@test.com", password=generate_password_hash("test3"))
-    )
+    admin = User(username="admin", is_staff=True)
+
+    james = User(username="james")
+
+    db.session.add(admin)
+
+    db.session.add(james)
 
     db.session.commit()
 
+    print("done! created users:", admin, james)
