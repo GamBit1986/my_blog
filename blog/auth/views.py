@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import logout_user, login_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from ..extension import login_manager
 
@@ -13,28 +13,29 @@ auth = Blueprint("auth", __name__, url_prefix="/auth", static_folder="../static"
 
 @auth.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == "GET":
-        form = UserLoginForm(request.form)
-        errors = []
+    form = UserLoginForm(request.form)
+    errors = []
 
-        email = request.form.get("email")
-        password = request.form.get("password")
-        user = User.query.filter_by(email=email).first()
+    if request.method == "GET":
         return render_template(
             "auth/login.html",
             form=form,
             errors=errors,
         )
+    if request.method == "POST" and form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).one_or_none()
+        if user is None:
+            return render_template(
+                "auth/login.html", form=form, error="username doesn't exist"
+            )
+        if not check_password_hash(user.password, form.password.data):
+            return render_template(
+                "auth/login.html", form=form, error="invalid username or password"
+            )
 
-    if not user or not check_password_hash(user.password, password):
-        flash("Check login or password")
-        return redirect(url_for(".login"))
-    login_user(user)
-    return render_template(
-        "./users/list.html",
-        form=form,
-        errors=errors,
-    )
+        login_user(user)
+        users = User.query.all()
+        return render_template("./users/list.html", users=users)
 
 
 @auth.route("/logout")
