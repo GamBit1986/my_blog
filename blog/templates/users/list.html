@@ -13,7 +13,7 @@ Users list
 
             <li><a href="{{ url_for('user.get_user', pk=user.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                    {{ user.email }}</a></li>
+                    Nickname: {{ user.username }} Name: {{ user.name }}</a></li>
 
             {% endfor %}
         </ul>

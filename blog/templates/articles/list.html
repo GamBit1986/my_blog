@@ -9,11 +9,11 @@ Users list
     <div class="col">
         <h1>Articles list:</h1>
         <ul>
-            {% for pk in article %}
+            {% for article in articles %}
 
-            <li><a href="{{ url_for('articles.get_article', pk=pk) }}"
+            <li><a href="{{ url_for('article.article_detail', article_id=article.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                    {{ article[pk]['Title'] }}</a></li>
+                    {{ article.title }}</a></li>
 
             {% endfor %}
 

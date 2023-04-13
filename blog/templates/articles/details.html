@@ -1,34 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Articles detail
+{{ article.title }}
 {% endblock %}
 
 {% block body %}
+
+<h1>{{ article.title }}</h1>
 <div class="container">
-
-
-
-    <!-- Циклом и условиями выбираем нужного автора, для которого создаем ссылку на его страницу -->
-    {% for article_key in article_dict %}
-    {% if article_dict[article_key] == article_dict["User"] %}
-    
-    {% for user in users %}
-    {% if article_dict[article_key] == user.id %}
-    <h3>{{ article_key }}</h3>
-    <a href="{{ url_for('user.get_user', pk=user.id) }}">{{ article_dict[article_key] }}</a>
-
-
-    {% endif %}
-    {% endfor %}
-
-    <!-- Для текста и заголовка создаем параграфы с заголовками  -->
-
-    {% elif article_dict[article_key] != article_dict["User"] %}
-    <h3>{{ article_key }}</h3>
-    <p>{{ article_dict[article_key] }}</p>
-    {% endif %}
-    {% endfor %}
-
+    {{ article.text }}
 </div>
+
+<div>Author: {{ article.author.user.username }}</div>
+<div>Created at: {{ article.created_at }}</div>
+<div>Updated at: {{ article.updated_at }}</div>
 {% endblock %}
