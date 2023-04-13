@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255))
     is_staff = db.Column(db.Boolean, default=False)
 
+
     author = relationship("Author", uselist=False, back_populates="user")
 
     def __init__(self, username, name, email, password, is_staff):
@@ -50,3 +51,4 @@ class Article(db.Model):
     )
 
     author = relationship("Author", back_populates="articles")
+

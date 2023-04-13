@@ -10,6 +10,7 @@ from blog.articles.views import articles
 from blog.auth.views import auth
 from blog.authors.views import author
 from .models import User
+
 from .extension import db, login_manager, migrate, csrf
 
 
@@ -25,7 +26,9 @@ app = Flask(__name__)
 def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
+
     csrf.init_app(app)
+
 
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
@@ -48,6 +51,7 @@ def register_commands(app: Flask):
     app.cli.add_command(create_admin)
 
 
+
 """ @app.cli.command("init-db")
 def init_db():
     
@@ -56,6 +60,7 @@ def init_db():
     
     db.create_all()
     print("done!") """
+
 
 
 @app.cli.command("create-users")
@@ -81,7 +86,9 @@ def create_admin():
 
     flask create-users
 
+
     > done! created users: <User #1 'admin'>
+
     """
 
     from blog.models import User
