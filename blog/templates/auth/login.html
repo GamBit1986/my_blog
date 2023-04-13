@@ -6,13 +6,10 @@ Login User
 {% endblock %}
 
 {% block body %}
-{% if errors %}
-{% for error in errors %}
-<div class="alert alert-danger" role="alert">
+{% if error %}
+<div class="alert alert-danger">
     {{ error }}
 </div>
-{% endfor %}
-
 {% endif %}
 <form method="POST">
     {{ form.csrf_token }}
@@ -23,5 +20,7 @@ Login User
     {{ form.submit(class="btn btn-primary") }}
 
 </form>
+
+<a class="" href="{{ url_for('user.register') }}">Registration</a>
 
 {% endblock %}
