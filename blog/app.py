@@ -10,6 +10,7 @@ from blog.articles.views import article
 from blog.auth.views import auth
 from blog.authors.views import author
 from .models import User
+from blog.admin.routes import admin
 
 from .extension import db, login_manager, migrate, csrf
 
@@ -26,8 +27,8 @@ app = Flask(__name__)
 def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
-
     csrf.init_app(app)
+    admin.init_app(app)
 
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
@@ -38,66 +39,14 @@ def register_extensions(app):
 
 
 def register_blueprints(app: Flask):
-    app.register_blueprint(user)
-    app.register_blueprint(article)
+    app.register_blueprint(user, name="user_bp")
+    app.register_blueprint(article, name="article_bp")
     app.register_blueprint(auth)
     app.register_blueprint(author)
 
 
 def register_commands(app: Flask):
-    # app.cli.add_command(init_db)
-    app.cli.add_command(create_users)
-    app.cli.add_command(create_admin)
     app.cli.add_command(create_tags)
-
-
-""" @app.cli.command("init-db")
-def init_db():
-    
-    Run in your terminal:
-    flask init-db
-    
-    db.create_all()
-    print("done!") """
-
-
-@app.cli.command("create-users")
-def create_users():
-    from blog.models import User
-
-    db.session.add(User(email="aaaa@test.com", password=generate_password_hash("test")))
-    db.session.add(
-        User(email="test2@test.com", password=generate_password_hash("test2"))
-    )
-    db.session.add(
-        User(email="test3@test.com", password=generate_password_hash("test3"))
-    )
-
-    db.session.commit()
-
-
-@app.cli.command("create-admin")
-def create_admin():
-    """
-
-    Run in your terminal:
-
-    flask create-users
-
-
-    > done! created users: <User #1 'admin'>
-
-    """
-
-    from blog.models import User
-
-    admin = User(username="admin", is_staff=True)
-
-    db.session.add(admin)
-
-    db.session.commit()
-
-    print("done! created users:", admin)
 
 
 @app.cli.command("create-tags")

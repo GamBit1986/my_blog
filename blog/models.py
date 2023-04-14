@@ -44,6 +44,9 @@ class Author(db.Model):
     user = relationship("User", back_populates="author")
     articles = relationship("Article", back_populates="author")
 
+    def __str__(self) -> str:
+        return self.user_bp.name
+
 
 class Article(db.Model):
     __tablename__ = "articles"
@@ -62,6 +65,9 @@ class Article(db.Model):
         "Tag", secondary=article_tag_association_table, back_populates="articles"
     )
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Tag(db.Model):
     __tablename__ = "tags"
@@ -72,3 +78,6 @@ class Tag(db.Model):
     articles = relationship(
         "Article", secondary=article_tag_association_table, back_populates="tags"
     )
+
+    def __str__(self):
+        return self.name

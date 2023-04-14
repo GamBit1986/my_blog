@@ -368,7 +368,6 @@ files = [
 ]
 
 [[package]]
-
 name = "dnspython"
 version = "2.3.0"
 description = "DNS toolkit"
@@ -390,7 +389,6 @@ trio = ["trio (>=0.14,<0.23)"]
 wmi = ["wmi (>=1.5.1,<2.0.0)"]
 
 [[package]]
-
 name = "dulwich"
 version = "0.21.3"
 description = "Python Git Library"
@@ -466,7 +464,6 @@ paramiko = ["paramiko"]
 pgp = ["gpg"]
 
 [[package]]
-
 name = "email-validator"
 version = "1.3.1"
 description = "A robust email address syntax and deliverability validation library."
@@ -483,7 +480,6 @@ dnspython = ">=1.15.0"
 idna = ">=2.0.0"
 
 [[package]]
-
 name = "filelock"
 version = "3.11.0"
 description = "A platform independent file lock."
@@ -520,6 +516,26 @@ Werkzeug = ">=2.2.2"
 [package.extras]
 async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
+
+[[package]]
+name = "flask-admin"
+version = "1.6.1"
+description = "Simple and extensible admin interface framework for Flask"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "Flask-Admin-1.6.1.tar.gz", hash = "sha256:24cae2af832b6a611a01d7dc35f42d266c1d6c75a426b869d8cb241b78233369"},
+    {file = "Flask_Admin-1.6.1-py3-none-any.whl", hash = "sha256:fd8190f1ec3355913a22739c46ed3623f1d82b8112cde324c60a6fc9b21c9406"},
+]
+
+[package.dependencies]
+Flask = ">=0.7"
+wtforms = "*"
+
+[package.extras]
+aws = ["boto"]
+azure = ["azure-storage-blob"]
 
 [[package]]
 name = "flask-login"
@@ -676,7 +692,6 @@ files = [
     {file = "html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f"},
 ]
 
-
 [package.dependencies]
 six = ">=1.9"
 webencodings = "*"
@@ -698,7 +713,6 @@ files = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
-
 
 [[package]]
 name = "importlib-metadata"
@@ -1694,7 +1708,6 @@ MarkupSafe = ">=2.1.1"
 watchdog = ["watchdog"]
 
 [[package]]
-
 name = "wtforms"
 version = "3.0.1"
 description = "Form validation and rendering for Python web development."
@@ -1713,7 +1726,6 @@ MarkupSafe = "*"
 email = ["email-validator"]
 
 [[package]]
-
 name = "xattr"
 version = "0.10.1"
 description = "Python wrapper for extended filesystem attributes"
@@ -1817,6 +1829,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-
-content-hash = "e923e61560cce3070b88b92674589f03823d94e40a6e30615f9770b3ce772e84"
-
+content-hash = "f22eab7c29ce43208d938fc513e9bad09ecc271973b80ce6d31ebff4aed3962b"
