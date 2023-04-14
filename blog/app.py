@@ -48,6 +48,7 @@ def register_commands(app: Flask):
     # app.cli.add_command(init_db)
     app.cli.add_command(create_users)
     app.cli.add_command(create_admin)
+    app.cli.add_command(create_tags)
 
 
 """ @app.cli.command("init-db")
@@ -97,6 +98,31 @@ def create_admin():
     db.session.commit()
 
     print("done! created users:", admin)
+
+
+@app.cli.command("create-tags")
+def create_tags():
+    """
+
+    Run in your terminal:
+
+    flask create-tags
+
+    """
+
+    from blog.models import Tag
+
+    for name in [
+        "flask",
+        "django",
+        "python",
+        "sqlalchemy",
+        "news",
+    ]:
+        tag = Tag(name=name)
+        db.session.add(tag)
+    db.session.commit()
+    print("created tags")
 
 
 app.config.from_object("blog.config")
