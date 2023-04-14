@@ -1,55 +1,61 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for, request
 from werkzeug.exceptions import NotFound
-from flask_login import login_required
+from flask_login import login_required, current_user
 
-from ..models import User
+from ..forms.articles import CreateArticleForm
+from ..models import User, Article, Author
+from ..extension import db
 
-articles = Blueprint(
-    "articles", __name__, url_prefix="/articles", static_folder="../static"
+article = Blueprint(
+    "article", __name__, url_prefix="/article", static_folder="../static"
 )
 
-ARTICLE = {
-    0: {
-        "Title": "Title 1",
-        "Text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis, non ipsum quae saepe a ducimus nemo ratione ipsam totam doloribus debitis! Illo ullam ducimus ab vero numquam autem, excepturi alias!Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ipsam",
 
-        "User": 1,
-    },
-    1: {
-        "Title": "Title 2",
-        "Text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ipsam?",
-        "User": 2,
-    },
-    2: {
-        "Title": "Title 3",
-        "Text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ipsam?",
-        "User": 3,
-    },
-    3: {
-        "Title": "Title 4",
-        "Text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ipsam?",
-        "User": 4,
-    },
-}
-
-
-@articles.route("/")
+@article.route("/", methods=["GET"])
 def article_list():
+    articles: Article = Article.query.all()
     return render_template(
         "./articles/list.html",
-        article=ARTICLE,
+        articles=articles,
     )
 
 
-@articles.route("/<int:pk>")
-#@login_required
-def get_article(pk: int):
-    try:
-        article_dict = ARTICLE[pk]
-        users = User.query.all()
+@article.route("/create", methods=["GET"])
+@login_required
+def create_article_form():
+    form = CreateArticleForm(request.form)
+    return render_template("articles/create.html", form=form)
 
-    except IndexError:
-        raise NotFound(f"User ID {pk} is not found")
-    return render_template(
-        "./articles/details.html", article_dict=article_dict, users=users
-    )
+
+@article.route("/", methods=["POST"])
+@login_required
+def create_article():
+    form = CreateArticleForm(request.form)
+
+    if form.validate_on_submit():
+        _article = Article(title=form.title.data, text=form.text.data)
+
+        if current_user.author:
+            _article.author_id = current_user.author
+        else:
+            author = Author(user_id=current_user.id)
+            db.session.add(author)
+            db.session.commit()
+
+        _article.author_id = current_user.author.id
+
+        db.session.add(_article)
+        db.session.commit()
+        i = _article.id
+
+        return redirect(url_for("article.article_detail", article_id=_article.id))
+    return render_template("articles/create.html", form=form)
+
+
+@article.route("/<int:article_id>/")
+@login_required
+def article_detail(article_id: int):
+    _article: Article = Article.query.filter_by(id=article_id).one_or_none()
+    if _article is None:
+        raise NotFound
+    return render_template("./articles/details.html", article=_article)

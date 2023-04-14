@@ -24,13 +24,11 @@ def login():
         )
     if request.method == "POST" and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).one_or_none()
-        if user is None:
+        if user is None or not check_password_hash(user.password, form.password.data):
             return render_template(
-                "auth/login.html", form=form, error="username doesn't exist"
-            )
-        if not check_password_hash(user.password, form.password.data):
-            return render_template(
-                "auth/login.html", form=form, error="invalid username or password"
+                "auth/login.html",
+                form=form,
+                error="username doesn't exist or password isn't correct",
             )
 
         login_user(user)

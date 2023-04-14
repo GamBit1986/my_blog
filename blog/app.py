@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash
 from flask import Flask
 
 from blog.user.views import user
-from blog.articles.views import articles
+from blog.articles.views import article
 from blog.auth.views import auth
 from blog.authors.views import author
 from .models import User
@@ -29,7 +29,6 @@ def register_extensions(app):
 
     csrf.init_app(app)
 
-
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
@@ -40,7 +39,7 @@ def register_extensions(app):
 
 def register_blueprints(app: Flask):
     app.register_blueprint(user)
-    app.register_blueprint(articles)
+    app.register_blueprint(article)
     app.register_blueprint(auth)
     app.register_blueprint(author)
 
@@ -51,7 +50,6 @@ def register_commands(app: Flask):
     app.cli.add_command(create_admin)
 
 
-
 """ @app.cli.command("init-db")
 def init_db():
     
@@ -60,7 +58,6 @@ def init_db():
     
     db.create_all()
     print("done!") """
-
 
 
 @app.cli.command("create-users")
