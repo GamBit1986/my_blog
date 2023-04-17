@@ -11,7 +11,7 @@ Users list
         <ul>
             {% for article in articles %}
 
-            <li><a href="{{ url_for('article.article_detail', article_id=article.id) }}"
+            <li><a href="{{ url_for('article_bp.article_detail', article_id=article.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                     {{ article.title }}</a></li>
 
@@ -22,5 +22,3 @@ Users list
 </div>
 
 {% endblock %}
-
-

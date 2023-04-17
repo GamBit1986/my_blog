@@ -12,7 +12,7 @@ Authors list
             <li>1</li>
             {% for author in authors %}
 
-            <li><a href="{{ url_for('user.get_user', pk=author.user.id) }}"
+            <li><a href="{{ url_for('user_bp.get_user', pk=author.user.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                     {{ authors }}</a></li>
             <p>{{ authors }}</p>
