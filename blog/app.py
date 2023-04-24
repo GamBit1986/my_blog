@@ -4,6 +4,7 @@ import os
 
 from werkzeug.security import generate_password_hash
 from flask import Flask
+from flask_combo_jsonapi import Api
 
 from blog.user.views import user
 from blog.articles.views import article
@@ -12,16 +13,10 @@ from blog.authors.views import author
 from .models import User
 from blog.admin.routes import admin
 
-from .extension import db, login_manager, migrate, csrf
+from .extension import db, login_manager, migrate, csrf, create_api_spec_plugin
 
 
 app = Flask(__name__)
-
-
-""" def create_app() -> Flask:
-    
-
-    return app """
 
 
 def register_extensions(app):
@@ -47,6 +42,18 @@ def register_blueprints(app: Flask):
 
 def register_commands(app: Flask):
     app.cli.add_command(create_tags)
+
+
+def register_api(app: Flask):
+    from blog.api.tag import TagList, TagDetail
+
+    api = Api(
+        app=app,
+        plugins=[create_api_spec_plugin(app)]
+    )
+    
+    api.route(TagList, "tag_list", "/api/tags")
+    api.route(TagDetail, "tag_detail", "/api/tags/<int:id>")
 
 
 @app.cli.command("create-tags")
@@ -75,9 +82,14 @@ def create_tags():
 
 
 app.config.from_object("blog.config")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["OPENAPI_URLPREFIX"] = "/api/docs"
+app.config["OPENAPI_SWAGGER_UI_PATH"] = "/"
+app.config["OPENAPI_SWAGGER_UI_VERSION"] = "3.22.0"
 
 migrate.init_app(app, db, compare_type=True)
 
 register_commands(app)
 register_extensions(app)
 register_blueprints(app)
+register_api(app)

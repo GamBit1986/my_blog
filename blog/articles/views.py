@@ -8,7 +8,7 @@ from ..models import User, Article, Author, Tag
 from ..extension import db
 
 article = Blueprint(
-    "article", __name__, url_prefix="/article", static_folder="../static"
+    "article_problem", __name__, url_prefix="/article", static_folder="../static"
 )
 
 
