@@ -7,13 +7,13 @@ from blog.forms.user import UserRegisterForm
 from ..models import User
 from ..extension import db
 
-user = Blueprint("user", __name__, static_folder="../static")
+user = Blueprint("user_problem", __name__, static_folder="../static")
 
 
 @user.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("user_bp.get_user", pk=current_user.id))
+        return redirect(url_for("user_problem.get_user", pk=current_user.id))
 
     form = UserRegisterForm(request.form)
     errors = []
