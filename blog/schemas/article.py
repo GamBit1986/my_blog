@@ -23,11 +23,11 @@ class ArticleSchema(Schema):
         many=False,
         )
     tags = Relationship(
-        nested="TagsSchema",
+        nested="TagSchema",
         attribute="tags",
         related_url="tags_detail",
         related_url_kwargs={"id": "<id>"},
-        schema="TagsSchema",
+        schema="TagSchema",
         type_="tag",
-        many=Truegit,
+        many=True,
         )

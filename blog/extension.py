@@ -10,7 +10,10 @@ def create_api_spec_plugin(app):
     api_spec_plugin = ApiSpecPlugin(
         app=app,
         tags={
-        "Tags": "Tags API"
+        "Tag": "Tag API",
+        "User": "User API",
+        "Article": "Article API",
+        "Author": "Author API",
         }
     )
     return api_spec_plugin
