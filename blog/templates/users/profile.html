@@ -5,9 +5,12 @@ Users detail
 {% endblock %}
 
 {% block body %}
-<!-- {% for use in user %} -->
+{% for use in user %}
 <div class="container">
-    <h1>{{ user[0].email }}</h1>
+    <h2>{{ use.username }}</h2>
+    <h2>{{ use.email }}</h2>
+    <h2>{{ use.id }}</h2>
+    <h2>{{ use.author }}</h2>
 
 </div>
 {% endfor %}

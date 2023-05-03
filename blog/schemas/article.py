@@ -1,0 +1,33 @@
+from marshmallow_jsonapi import Schema, fields
+from combojsonapi.utils import Relationship
+
+class ArticleSchema(Schema):
+    class Meta:
+        type_ = "article"
+        self_url = "article_detail"
+        self_url_kwargs = {"id": "<id>"}
+        self_url_many = "article_list"
+
+    id = fields.Integer(as_string=True)    
+    title = fields.String(allow_none=False, required=True)
+    text = fields.String(allow_none=False, required=True)
+    created_at = fields.DateTime(allow_none=False)
+    updated_at = fields.DateTime(allow_none=False)
+    author = Relationship(
+        nested="AuthorSchema",
+        attribute="author",
+        related_url="author_detail",
+        related_url_kwargs={"id": "<id>"},
+        schema="AuthorSchema",
+        type_="author",
+        many=False,
+        )
+    tags = Relationship(
+        nested="TagsSchema",
+        attribute="tags",
+        related_url="tags_detail",
+        related_url_kwargs={"id": "<id>"},
+        schema="TagsSchema",
+        type_="tag",
+        many=Truegit,
+        )

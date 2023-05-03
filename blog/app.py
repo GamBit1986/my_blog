@@ -52,6 +52,7 @@ def register_api(app: Flask):
         plugins=[create_api_spec_plugin(app)]
     )
     
+    
     api.route(TagList, "tag_list", "/api/tags")
     api.route(TagDetail, "tag_detail", "/api/tags/<int:id>")
 
@@ -82,10 +83,6 @@ def create_tags():
 
 
 app.config.from_object("blog.config")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["OPENAPI_URLPREFIX"] = "/api/docs"
-app.config["OPENAPI_SWAGGER_UI_PATH"] = "/"
-app.config["OPENAPI_SWAGGER_UI_VERSION"] = "3.22.0"
 
 migrate.init_app(app, db, compare_type=True)
 

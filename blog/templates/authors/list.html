@@ -9,14 +9,18 @@ Authors list
     <div class="col">
         <h1>Authors:</h1>
         <ul>
-            <li>1</li>
             {% for author in authors %}
 
             <li><a href="{{ url_for('user_problem.get_user', pk=author.user.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                    {{ authors }}</a></li>
-            <p>{{ authors }}</p>
+                    {{ author }}</a></li>
+            <br>
 
+            {% for article in author.articles %}
+
+            <p>{{ article.title }}</p>
+
+            {% endfor %}
             {% endfor %}
         </ul>
     </div>

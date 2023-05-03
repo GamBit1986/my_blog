@@ -39,25 +39,24 @@ def create_article():
     if form.validate_on_submit():
         _article = Article(title=form.title.data, text=form.text.data)
 
+        
+        if current_user.author:            
+            _article.author_id = current_user.author.id
+        else:
+            author = Author(user_id=current_user.id)
+            db.session.add(author)
+            db.session.flush()
+            _article.author_id = author.id
+
         if form.tags.data:
             selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
             for tag in selected_tags:
                 _article.tags.append(tag)
 
-        if current_user.author:
-            _article.author_id = current_user.author
-        else:
-            author = Author(user_id=current_user.id)
-            db.session.add(author)
-            db.session.commit()
-
-        _article.author_id = current_user.author.id
-
         db.session.add(_article)
-        db.session.commit()
-        i = _article.id
+        db.session.commit()        
 
-        return redirect(url_for("article_bp.article_detail", article_id=_article.id))
+        return redirect(url_for("article_problem.article_detail", article_id=_article.id))
     return render_template("articles/create.html", form=form)
 
 
