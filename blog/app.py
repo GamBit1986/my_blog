@@ -13,7 +13,7 @@ from blog.authors.views import author
 from .models import User
 from blog.admin.routes import admin
 
-from .extension import db, login_manager, migrate, csrf, create_api_spec_plugin
+from .extension import db, login_manager, migrate, csrf, create_api_spec_plugin, create_event_plugin, create_permission_plugin
 
 
 app = Flask(__name__)
@@ -42,6 +42,7 @@ def register_blueprints(app: Flask):
 
 def register_commands(app: Flask):
     app.cli.add_command(create_tags)
+    app.cli.add_command(create_admin)
 
 
 def register_api(app: Flask):
@@ -52,7 +53,11 @@ def register_api(app: Flask):
 
     api = Api(
         app=app,
-        plugins=[create_api_spec_plugin(app)]
+        plugins=[
+            create_api_spec_plugin(app),
+              create_event_plugin(app),
+              create_permission_plugin(app),
+              ]
     )
     
     
@@ -93,6 +98,21 @@ def create_tags():
     db.session.commit()
     print("created tags")
 
+@app.cli.command("create-admin")
+def create_admin():
+
+
+    """
+    Run in your terminal:
+    ➜ flask create-admin
+    > created admin: <User #1 'admin'>
+    """
+    from blog.models import User
+
+    admin = User(username="admin", is_staff=True, name="admin", email="admin@mail.ru", password="admin")    
+    db.session.add(admin)
+    db.session.commit()
+    print("created admin:", admin)
 
 app.config.from_object("blog.config")
 
