@@ -13,7 +13,7 @@ Users list
 
             <li><a href="{{ url_for('user_problem.get_user', pk=user.id) }}"
                     class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                    Nickname: {{ user.username }} Name: {{ user.name }}</a></li>
+                    Nickname: {{ user.username }} || Name: {{ user.name }} || id: {{ user.id }} </a></li>
 
             {% endfor %}
         </ul>
